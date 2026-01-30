@@ -14,7 +14,7 @@ TARGET="$TRIPLE$BUILD_ANDROID_PLATFORM"
 
 # Change NDK to your Android NDK location if needed
 if [ "$NDK" = "" ]; then
-    NDK=/c/Android/sdk/ndk/27.2.12479018
+    NDK=/c/Android/sdk/ndk/29.0.14206865
 fi
 if [ "$NDK_USR_LIB" = "" ]; then
     NDK_USR_LIB=$NDK/toolchains/llvm/prebuilt/$HOST_TAG/sysroot/usr/lib/$TRIPLE/$BUILD_ANDROID_PLATFORM
@@ -110,7 +110,7 @@ function build_arm64
     --extra-cflags=" --target=$TARGET -no-canonical-prefixes -fdata-sections -ffunction-sections -fno-limit-debug-info -funwind-tables -fPIC -O2 -DCONFIG_PIC -DANDROID -DANDROID_PLATFORM=android-$BUILD_ANDROID_PLATFORM -Dipv6mr_interface=ipv6mr_ifindex -fasm -fno-short-enums -fno-strict-aliasing -Wno-missing-prototypes" \
     --disable-shared \
     --enable-static \
-    --extra-ldflags="--target=$TARGET -Wl,-Bsymbolic -Wl,--rpath-link,$NDK_USR_LIB -L$NDK_USR_LIB -nostdlib -lc -lm -ldl -llog" \
+    --extra-ldflags="--target=$TARGET -Wl,-Bsymbolic -Wl,-z,max-page-size=16384 -Wl,--rpath-link,$NDK_USR_LIB -L$NDK_USR_LIB -nostdlib -lc -lm -ldl -llog" \
     --enable-zlib \
     --disable-everything \
     ${MODULES} \
@@ -123,7 +123,7 @@ function build_arm64
     ${PARSERS}
 
 make clean
-make -j8 install
+make -j16 install
 }
 
 build_arm64

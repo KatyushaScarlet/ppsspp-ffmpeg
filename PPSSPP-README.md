@@ -19,7 +19,7 @@ Building for Android on Windows
 
 * install msys, or update it (pacman -Suy)
 
-* pacman --sync yasm diffutils
+* pacman --sync yasm diffutils make
 
 * edit NDK paths in android-arm64-v8a.sh (or whichever one you want to build)
 
